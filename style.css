@@ -14,8 +14,8 @@ body {
   border-radius: 12px;
   width: 90vw;
   max-width: 600px;
-  height: 90vh;
-  max-height: 90vh;
+  height: 95vh;
+  max-height: 95vh;
   text-align: center;
   box-shadow: 0 10px 25px rgba(0,0,0,0.1);
   display: flex;
