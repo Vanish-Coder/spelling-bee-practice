@@ -44,7 +44,7 @@ document.getElementById("sayWord").onclick = () => {
 document.getElementById("saySlow").onclick = () => {
   speechSynthesis.cancel();
   const utterance = new SpeechSynthesisUtterance(current.word);
-  utterance.rate = 0.5;
+  utterance.rate = 0.35;
   utterance.voice = voice;
   speechSynthesis.speak(utterance);
 };
