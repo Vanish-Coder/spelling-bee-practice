@@ -36,6 +36,39 @@ h1 {
   font-size: 2.5rem;
 }
 
+.mode-selector {
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+.mode-selector label {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.mode-selector select {
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  border: 2px solid #4f46e5;
+  border-radius: 6px;
+  cursor: pointer;
+  background: white;
+  color: #1f2937;
+  font-weight: 500;
+}
+
+.mode-selector select:hover {
+  background: #f0f0ff;
+}
+
+.mode-selector select:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+}
+
 @media (max-width: 768px) {
   h1 {
     font-size: 2.2rem;
