@@ -61,9 +61,14 @@ function getUniqueWordsAttempted() {
   return Object.keys(wordStats).length;
 }
 
-// Check if practice mode is unlocked (50+ unique words attempted)
+// Count unique words with at least one failure
+function getUniqueWordsWithFailures() {
+  return Object.keys(wordStats).filter(word => wordStats[word].failures > 0).length;
+}
+
+// Check if practice mode is unlocked (15+ unique words with at least one failure)
 function isPracticeModeUnlocked() {
-  return getUniqueWordsAttempted() >= 50;
+  return getUniqueWordsWithFailures() >= 15;
 }
 
 // Update practice mode label to show progress
@@ -76,8 +81,8 @@ function updatePracticeModeLabel() {
     practiceOption.style.fontWeight = "bold";
     practiceOption.style.color = "green";
   } else {
-    const attempted = getUniqueWordsAttempted();
-    practiceOption.textContent = `Practice (${attempted}/50)`;
+    const wrongWords = getUniqueWordsWithFailures();
+    practiceOption.textContent = `Practice (${wrongWords}/15)`;
     practiceOption.style.color = "";
     practiceOption.style.fontWeight = "";
   }
@@ -117,9 +122,9 @@ fetch("words.json")
 function pickWord() {
   if (filteredWords.length === 0) {
     if (currentMode === "practice") {
-      const wordsAttempted = getUniqueWordsAttempted();
-      if (wordsAttempted < 50) {
-        document.getElementById("feedback").textContent = `Complete 50 unique words first! You've done ${wordsAttempted}/50.`;
+      const wrongWords = getUniqueWordsWithFailures();
+      if (wrongWords < 15) {
+        document.getElementById("feedback").textContent = `Get 15 words wrong first to unlock Practice mode! You've got ${wrongWords}/15.`;
       } else {
         document.getElementById("feedback").textContent = "Great job! No struggling words yet. Keep practicing!";
       }
@@ -198,8 +203,8 @@ document.getElementById("difficultyMode").onchange = (e) => {
   
   // Check if trying to access practice mode before unlocking
   if (selectedMode === "practice" && !isPracticeModeUnlocked()) {
-    const wordsAttempted = getUniqueWordsAttempted();
-    alert(`Practice mode unlocks after completing 50 unique words!\nYou've completed ${wordsAttempted}/50.`);
+    const wrongWords = getUniqueWordsWithFailures();
+    alert(`Practice mode unlocks after getting 15 words wrong!\nYou've got ${wrongWords}/15.`);
     document.getElementById("difficultyMode").value = currentMode; // Revert dropdown
     return;
   }
