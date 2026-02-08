@@ -69,6 +69,16 @@ h1 {
   box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
 }
 
+#addToPractice:hover {
+  background: #7c3aed;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+#addToPractice:active {
+  transform: translateY(0);
+}
+
 @media (max-width: 768px) {
   h1 {
     font-size: 2.2rem;
