@@ -185,7 +185,7 @@ document.getElementById("check").onclick = () => {
     document.getElementById("feedback").style.color = "green";
     recordSuccess(current.word);
   } else {
-    document.getElementById("feedback").textContent = `Incorrect! The correct spelling is ${current.word}`;
+    document.getElementById("feedback").textContent = `Incorrect! The correct spelling is ${current.word}.`;
     document.getElementById("feedback").style.color = "red";
     recordFailure(current.word);
   }
