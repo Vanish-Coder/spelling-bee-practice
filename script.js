@@ -255,7 +255,7 @@ document.getElementById("check").onclick = () => {
     feedback.style.color = "green";
     recordSuccess(current.word);
   } else {
-    feedback.textContent = `Incorrect! The correct spelling is ${current.word}`;
+    feedback.textContent = `Incorrect! The correct spelling is ${current.word}.`;
     feedback.style.color = "red";
     recordFailure(current.word);
   }
