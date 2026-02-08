@@ -337,3 +337,15 @@ closePopup.onclick = () => {
 
 // Show popup on load
 window.addEventListener("load", showPopup);
+
+// ---- SFX Toggle Button ----
+const sfxButton = document.getElementById("toggleSFX");
+if (sfxButton) {
+  sfxButton.onclick = () => {
+    sfxEnabled = !sfxEnabled;
+    sfxButton.textContent = `SFX: ${sfxEnabled ? "On" : "Off"}`;
+    if (sfxEnabled) clickSound.play();
+    addGlow(sfxButton);
+  };
+}
+
