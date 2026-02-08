@@ -87,7 +87,7 @@ function getUniqueWordsWithFailures() {
 
 // Count unique struggling words (for practice mode)
 function getUniqueStrugglingWords() {
-  return getStruggleWords().length;
+  return Object.keys(wordStats).filter(word => isTrulyStruggling(word)).length;
 }
 
 // Check if practice mode is unlocked (15+ unique words with at least one failure)
