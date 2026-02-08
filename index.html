@@ -7,26 +7,19 @@
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
 </head>
 <body>
-  <!-- License Popup -->
-  <div id="licensePopup" class="popup-overlay">
+  <!-- License popup -->
+  <div id="licensePopup" class="popup">
     <div class="popup-content">
-      <p>
-        This site is under an MIT License. No personal data is collected and cookies are sparingly used, only when necessary (such as for remembering user choices, never for tracking or analytics). The source code is open source and you can view it here:
-        <a href="https://github.com/Vanish-Coder/spelling-bee-practice" target="_blank">My GitHub Repository</a>
-      </p>
-
-      <div id="popupControls">
-        <button id="closePopup" class="popup-btn">Got it</button>
-        <label><input type="checkbox" id="dontShowAgain"> Don't show again</label>
-      </div>
+      <p>This site is under an MIT License. No personal data is collected and cookies are sparingly used, only when necessary (such as for remembering user choices, never for tracking or analytics). The source code is open source and you can view it <a href="https://github.com/Vanish-Coder/spelling-bee-practice" target="_blank">here</a>.</p>
+      <label><input type="checkbox" id="dontShowAgain"> Don't show again</label>
+      <button id="closePopup">Got it</button>
     </div>
   </div>
 
   <div class="container">
     <h1>Spelling Bee Practice 🐝</h1>
-    <p class="shortcut-note">Press <strong>Enter</strong> to Check, <strong>Shift</strong> for Next Word</p>
-
     <h2>A site to help you prepare for spelling bees at a CCSS-CA (California's Common Core State Standards) 4th to 6th grade level.</h2>
+    <p><em>Keyboard shortcuts: Enter = Check, Shift = Next Word</em></p>
 
     <div class="mode-selector">
       <label for="difficultyMode">Difficulty:</label>
@@ -37,12 +30,14 @@
       </select>
     </div>
 
-    <h3 id="practiceWarning" style="display: none; color: #f59e0b; margin: 1rem 0; font-size: 1rem;">
-      Practice mode will be locked again when you have fewer than 10 words to practice.
-    </h3>
+    <h3 id="practiceWarning" style="display: none; color: #f59e0b; margin: 1rem 0; font-size: 1rem;">Practice mode will be locked again when you have less than 10 words to practice.</h3>
 
-    <button id="addToPractice" style="margin-bottom: 1rem; background: #8b5cf6;">+ Add This Word to Practice</button>
-    <button id="clearCache" style="margin-bottom: 1rem; margin-left: 0.5rem; background: #ef4444;">🗑️ Clear Cache</button>
+    <button id="addToPractice" style="margin-bottom: 1rem; background: #8b5cf6; padding: 0.8rem 1.2rem; border: none; border-radius: 8px; color: white; font-size: 1rem; font-weight: 600; cursor: pointer;">+ Add This Word to Practice</button>
+
+    <button id="clearCache" style="margin-bottom: 1rem; margin-left: 0.5rem; background: #ef4444; padding: 0.8rem 1.2rem; border: none; border-radius: 8px; color: white; font-size: 1rem; font-weight: 600; cursor: pointer;">🗑️ Clear Cache</button>
+
+    <!-- NEW SFX Toggle Button -->
+    <button id="toggleSFX" style="margin-bottom: 1rem; margin-left: 0.5rem; background: #ef4444; padding: 0.8rem 1.2rem; border: none; border-radius: 8px; color: white; font-size: 1rem; font-weight: 600; cursor: pointer;">SFX: On</button>
 
     <div class="buttons">
       <button id="sayWord">🔊 Say Word</button>
