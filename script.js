@@ -4,35 +4,33 @@ let previousWord = null;
 let voice = null;
 let currentMode = "easy";
 let filteredWords = [];
-let wordStats = {}; // Track {word: {failures: 0, successes: 0}}
+let wordStats = {}; // { word: { failures: 0, successes: 0 } }
 
 /* ===== Sound Feedback ===== */
-const clickSound = new Audio(
-  "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQAAAAA="
-);
+const clickSound = new Audio("click.wav"); // Put click.wav in same folder
 
 /* ===== Glow Helper ===== */
 function triggerGlow(btn) {
   if (!btn) return;
   btn.classList.remove("button-glow");
-  void btn.offsetWidth;
+  void btn.offsetWidth; // Force reflow
   btn.classList.add("button-glow");
   clickSound.currentTime = 0;
   clickSound.play();
 }
 
-/* ===== Difficulty & Stats Logic ===== */
+/* ===== Stats & Word Logic ===== */
 function isEasyWord(word) {
   return word.length <= 7;
 }
 
 function loadWordStats() {
-  const stored = localStorage.getItem('spellingBeeWordStats');
+  const stored = localStorage.getItem("spellingBeeWordStats");
   wordStats = stored ? JSON.parse(stored) : {};
 }
 
 function saveWordStats() {
-  localStorage.setItem('spellingBeeWordStats', JSON.stringify(wordStats));
+  localStorage.setItem("spellingBeeWordStats", JSON.stringify(wordStats));
 }
 
 function initWordStat(word) {
@@ -69,12 +67,8 @@ function manuallyAddToPractice(word) {
   alert(`"${word}" has been added to practice mode!`);
 }
 
-function getStruggleWords() {
-  return words.map(w => w.word).filter(word => isTrulyStruggling(word));
-}
-
 function getUniqueWordsWithFailures() {
-  return Object.keys(wordStats).filter(w => wordStats[w].failures > 0).length;
+  return Object.keys(wordStats).filter((w) => wordStats[w].failures > 0).length;
 }
 
 function getUniqueStrugglingWords() {
@@ -89,24 +83,28 @@ function shouldRelock() {
   return getUniqueStrugglingWords() < 10 && currentMode === "practice";
 }
 
+function getStruggleWords() {
+  return words.map((w) => w.word).filter(isTrulyStruggling);
+}
+
 /* ===== Filter Words ===== */
 function filterWordsByMode() {
   if (currentMode === "easy") {
-    filteredWords = words.filter(w => isEasyWord(w.word));
+    filteredWords = words.filter((w) => isEasyWord(w.word));
   } else if (currentMode === "hard") {
-    filteredWords = words.filter(w => !isEasyWord(w.word));
+    filteredWords = words.filter((w) => !isEasyWord(w.word));
   } else if (currentMode === "practice") {
     if (!isPracticeModeUnlocked()) {
       currentMode = "easy";
-      filteredWords = words.filter(w => isEasyWord(w.word));
+      filteredWords = words.filter((w) => isEasyWord(w.word));
       return;
     }
     const strugglingList = getStruggleWords();
-    filteredWords = words.filter(w => strugglingList.includes(w.word));
+    filteredWords = words.filter((w) => strugglingList.includes(w.word));
   }
 }
 
-/* ===== Practice Mode UI ===== */
+/* ===== Practice Mode Label ===== */
 function updatePracticeModeLabel() {
   const practiceOption = document.getElementById("practiceOption");
   if (!practiceOption) return;
@@ -114,16 +112,15 @@ function updatePracticeModeLabel() {
   const warningText = document.getElementById("practiceWarning");
 
   if (isPracticeModeUnlocked()) {
-    practiceOption.textContent = `Practice (Unlocked)`;
+    practiceOption.textContent = "Practice (Unlocked)";
     practiceOption.style.fontWeight = "bold";
     practiceOption.style.color = "green";
   } else {
-    practiceOption.textContent = `Practice (Locked)`;
+    practiceOption.textContent = "Practice (Locked)";
     practiceOption.style.fontWeight = "";
     practiceOption.style.color = "";
   }
 
-  // Show/hide practice warning
   if (currentMode === "practice") {
     if (warningText) warningText.style.display = "block";
   } else {
@@ -135,9 +132,9 @@ function updatePracticeModeLabel() {
 function pickWord() {
   if (filteredWords.length === 0) {
     document.getElementById("feedback").textContent =
-      currentMode === "practice" ? 
-        getUniqueWordsWithFailures() < 15 
-          ? `Get 15 words wrong first to unlock Practice mode! You've got ${getUniqueWordsWithFailures()}/15.` 
+      currentMode === "practice"
+        ? getUniqueWordsWithFailures() < 15
+          ? `Get 15 words wrong first to unlock Practice mode! You've got ${getUniqueWordsWithFailures()}/15.`
           : "Great job! No struggling words yet. Keep practicing!"
         : "No words available for this difficulty.";
     return;
@@ -165,14 +162,16 @@ function speak(text) {
 
 speechSynthesis.onvoiceschanged = () => {
   const voices = speechSynthesis.getVoices();
-  voice = voices.find(v => v.lang === "en-US") || voices[0];
+  voice = voices.find((v) => v.lang === "en-US") || voices[0];
 };
 
-/* ===== Button & UI Events ===== */
+/* ===== Button & Input Events ===== */
 document.getElementById("sayWord").onclick = () => speak(current.word);
 document.getElementById("saySlow").onclick = () => {
   const u = new SpeechSynthesisUtterance(current.word);
-  u.rate = 0.35; u.voice = voice; speechSynthesis.speak(u);
+  u.rate = 0.35;
+  u.voice = voice;
+  speechSynthesis.speak(u);
 };
 document.getElementById("saySentence").onclick = () => speak(current.sentence);
 document.getElementById("sayDefinition").onclick = () => speak(current.definition);
@@ -185,10 +184,11 @@ document.getElementById("check").onclick = () => {
     document.getElementById("feedback").style.color = "green";
     recordSuccess(current.word);
   } else {
-    document.getElementById("feedback").textContent = `Incorrect! The correct spelling is ${current.word}.`;
+    document.getElementById("feedback").textContent = `Incorrect! The correct spelling is ${current.word}`;
     document.getElementById("feedback").style.color = "red";
     recordFailure(current.word);
   }
+
   updatePracticeModeLabel();
 
   if (shouldRelock()) {
@@ -196,7 +196,9 @@ document.getElementById("check").onclick = () => {
     document.getElementById("difficultyMode").value = "easy";
     filterWordsByMode();
     pickWord();
-    alert("Practice mode re-locked! You have fewer than 10 struggling words. Master more words to unlock it again!");
+    alert(
+      "Practice mode re-locked! You have fewer than 10 struggling words. Master more words to unlock it again!"
+    );
     updatePracticeModeLabel();
   }
 };
@@ -211,8 +213,12 @@ document.getElementById("addToPractice").onclick = () => {
 };
 
 document.getElementById("clearCache").onclick = () => {
-  if (confirm("Are you sure? This will delete all your progress and unlock status.")) {
-    localStorage.removeItem('spellingBeeWordStats');
+  if (
+    confirm(
+      "Are you sure? This will delete all your progress and your unlock status."
+    )
+  ) {
+    localStorage.removeItem("spellingBeeWordStats");
     wordStats = {};
     currentMode = "easy";
     document.getElementById("difficultyMode").value = "easy";
@@ -222,10 +228,12 @@ document.getElementById("clearCache").onclick = () => {
   }
 };
 
-document.getElementById("difficultyMode").onchange = e => {
+document.getElementById("difficultyMode").onchange = (e) => {
   const selected = e.target.value;
   if (selected === "practice" && !isPracticeModeUnlocked()) {
-    alert(`Practice mode unlocks after getting 15 words wrong!\nYou've got ${getUniqueWordsWithFailures()}/15.`);
+    alert(
+      `Practice mode unlocks after getting 15 words wrong!\nYou've got ${getUniqueWordsWithFailures()}/15.`
+    );
     e.target.value = currentMode;
     return;
   }
@@ -236,23 +244,31 @@ document.getElementById("difficultyMode").onchange = e => {
 };
 
 /* ===== Keyboard Shortcuts ===== */
-document.addEventListener("keydown", e => {
-  if (e.key === "Enter") { e.preventDefault(); document.getElementById("check").click(); }
-  if (e.key === "Shift") { e.preventDefault(); document.getElementById("next").click(); }
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    document.getElementById("check").click();
+  }
+  if (e.key === "Shift") {
+    e.preventDefault();
+    document.getElementById("next").click();
+  }
 });
 
-/* ===== Button Glow on Click ===== */
-document.querySelectorAll("button").forEach(btn => {
+/* ===== Glow on all buttons (except popup) ===== */
+document.querySelectorAll("button").forEach((btn) => {
   if (btn.id !== "closePopup") {
     btn.addEventListener("click", () => triggerGlow(btn));
   }
 });
 
 /* ===== Load Words ===== */
-fetch("words.json").then(res => res.json()).then(data => {
-  words = data;
-  loadWordStats();
-  updatePracticeModeLabel();
-  filterWordsByMode();
-  pickWord();
-});
+fetch("words.json")
+  .then((res) => res.json())
+  .then((data) => {
+    words = data;
+    loadWordStats();
+    updatePracticeModeLabel();
+    filterWordsByMode();
+    pickWord();
+  });
