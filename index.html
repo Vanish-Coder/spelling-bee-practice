@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+\<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -9,11 +9,17 @@
 <body>
   <div class="container">
     <h1>Spelling Bee Practice 🐝</h1>
+
+    <p class="shortcut-hint">
+      ⌨️ <strong>Enter</strong> = Check answer &nbsp;•&nbsp;
+      <strong>Shift</strong> = Next word
+    </p>
+
     <h2>
       A site to help you prepare for spelling bees at a CCSS-CA
       (California's Common Core State Standards) 4th to 6th grade level.
     </h2>
- 
+
     <div class="mode-selector">
       <label for="difficultyMode">Difficulty:</label>
       <select id="difficultyMode">
@@ -23,26 +29,12 @@
       </select>
     </div>
 
-    <h3
-      id="practiceWarning"
-      style="display: none; color: #f59e0b; margin: 1rem 0; font-size: 1rem;"
-    >
+    <h3 id="practiceWarning" style="display:none; color:#f59e0b; margin:1rem 0;">
       Practice mode will be locked again when you have less than 10 words to practice.
     </h3>
 
-    <button
-      id="addToPractice"
-      style="margin-bottom: 1rem; background: #8b5cf6; padding: 0.8rem 1.2rem; border: none; border-radius: 8px; color: white; font-size: 1rem; font-weight: 600; cursor: pointer;"
-    >
-      + Add This Word to Practice
-    </button>
-
-    <button
-      id="clearCache"
-      style="margin-bottom: 1rem; margin-left: 0.5rem; background: #ef4444; padding: 0.8rem 1.2rem; border: none; border-radius: 8px; color: white; font-size: 1rem; font-weight: 600; cursor: pointer;"
-    >
-      🗑️ Clear Cache
-    </button>
+    <button id="addToPractice">+ Add This Word to Practice</button>
+    <button id="clearCache">🗑️ Clear Cache</button>
 
     <div class="buttons">
       <button id="sayWord">🔊 Say Word</button>
@@ -61,41 +53,45 @@
     <p id="feedback"></p>
   </div>
 
-  <!-- License / Privacy Popup -->
-  <div id="licensePopup" class="popup-overlay" style="display: none;">
+  <!-- License Popup -->
+  <div id="licensePopup" class="popup-overlay" style="display:none;">
     <div class="popup-box">
       <h2>Notice</h2>
       <p>
-        This site is under an <strong>MIT License</strong>. No personal data is collected
-        and cookies are sparingly used, only when necessary (such as for remembering user
-        choices, never for tracking or analytics).
+        This site is under an <strong>MIT License</strong>. No personal data is collected and
+        cookies are sparingly used, only when necessary (never for tracking or analytics).
       </p>
       <p>
-        The source code is open source and available here:
+        Source code:
         <br />
-        <a
-          href="https://github.com/Vanish-Coder/spelling-bee-practice"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          My GitHub Repository
+        <a href="https://github.com/Vanish-Coder/spelling-bee-practice" target="_blank">
+          github.com/Vanish-Coder/spelling-bee-practice
         </a>
       </p>
+
+      <label class="dont-show">
+        <input type="checkbox" id="dontShowAgain" />
+        Don’t show again
+      </label>
+
       <button id="closePopup">Got it</button>
     </div>
   </div>
 
   <script src="script.js"></script>
+
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      if (!localStorage.getItem("licensePopupSeen")) {
+      if (!localStorage.getItem("hideLicensePopup")) {
         document.getElementById("licensePopup").style.display = "flex";
       }
 
-      document.getElementById("closePopup").addEventListener("click", () => {
+      document.getElementById("closePopup").onclick = () => {
+        if (document.getElementById("dontShowAgain").checked) {
+          localStorage.setItem("hideLicensePopup", "true");
+        }
         document.getElementById("licensePopup").style.display = "none";
-        localStorage.setItem("licensePopupSeen", "true");
-      });
+      };
     });
   </script>
 </body>
