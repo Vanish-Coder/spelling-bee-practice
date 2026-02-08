@@ -16,7 +16,6 @@ body {
   width: 90vw;
   max-width: 600px;
   height: 85vh;
-  max-height: 85vh;
   text-align: center;
   box-shadow: 0 10px 25px rgba(0,0,0,0.1);
   display: flex;
@@ -24,101 +23,44 @@ body {
   overflow-y: auto;
 }
 
-@media (max-width: 768px) {
-  .container {
-    height: 85vh;
-    max-height: 85vh;
-  }
-}
+h1 { font-size: 2.5rem; margin-bottom: 0.3rem; }
 
-h1 {
+.shortcut-hint {
+  font-size: 0.95rem;
+  color: #4b5563;
   margin-bottom: 1rem;
-  font-size: 2.5rem;
 }
 
 .mode-selector {
-  margin-bottom: 1.5rem;
+  margin: 1.2rem 0;
   display: flex;
-  align-items: center;
   justify-content: center;
   gap: 0.8rem;
 }
 
-.mode-selector label {
-  font-weight: 600;
-  font-size: 1.1rem;
-}
-
-.mode-selector select {
-  padding: 0.6rem 1rem;
-  font-size: 1rem;
-  border: 2px solid #4f46e5;
-  border-radius: 6px;
-  cursor: pointer;
-  background: white;
-  color: #1f2937;
-  font-weight: 500;
-}
-
-.mode-selector select:hover {
-  background: #f0f0ff;
-}
-
-.mode-selector select:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
-}
-
-#addToPractice:hover {
-  background: #7c3aed;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-}
-
-#addToPractice:active {
-  transform: translateY(0);
-}
-
-@media (max-width: 768px) {
-  h1 {
-    font-size: 2.2rem;
-  }
-}
-
 .buttons button,
-.actions button {
-  margin: 0.6rem;
+.actions button,
+#addToPractice,
+#clearCache {
+  margin: 0.5rem;
   padding: 1rem 1.5rem;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   background: #4f46e5;
   color: white;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: 600;
 }
 
-@media (max-width: 768px) {
-  .buttons button,
-  .actions button {
-    font-size: 1.35rem;
-    padding: 1.1rem 1.5rem;
-    margin: 0.7rem;
-  }
-}
+#clearCache { background: #ef4444; }
+#addToPractice { background: #8b5cf6; }
 
 input {
   width: 100%;
   padding: 0.8rem;
-  margin-top: 1rem;
   font-size: 1.2rem;
-}
-
-@media (max-width: 768px) {
-  input {
-    font-size: 1.15rem;
-    padding: 0.9rem;
-  }
+  margin-top: 1rem;
 }
 
 #feedback {
@@ -127,57 +69,46 @@ input {
   font-size: 1.2rem;
 }
 
-@media (max-width: 768px) {
-  #feedback {
-    font-size: 1.15rem;
-  }
-}
-
-/* ===== License Popup Styles ===== */
+/* ===== Popup ===== */
 
 .popup-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0,0,0,0.5);
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   z-index: 9999;
 }
 
 .popup-box {
   background: white;
-  color: #1f2937;
   padding: 1.8rem;
   border-radius: 12px;
   max-width: 420px;
   width: 90%;
   text-align: center;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
-}
-
-.popup-box h2 {
-  margin-top: 0;
 }
 
 .popup-box a {
   color: #4f46e5;
   font-weight: 600;
-  word-break: break-all;
 }
 
-.popup-box button {
-  margin-top: 1.2rem;
-  background: #4f46e5;
-  border: none;
-  color: white;
-  padding: 0.6rem 1.4rem;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
+.dont-show {
+  display: block;
+  margin-top: 1rem;
+  font-size: 0.9rem;
 }
 
-.popup-box button:hover {
-  background: #4338ca;
+/* ===== Button Glow ===== */
+
+@keyframes pressGlow {
+  0% { box-shadow: 0 0 0 rgba(79,70,229,0); }
+  50% { box-shadow: 0 0 18px rgba(79,70,229,0.7); }
+  100% { box-shadow: 0 0 0 rgba(79,70,229,0); }
+}
+
+.button-glow {
+  animation: pressGlow 0.6s ease-out;
 }
