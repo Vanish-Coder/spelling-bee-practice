@@ -1,5 +1,6 @@
 let words = [];
 let current = null;
+let previousWord = null;
 let voice = null;
 let currentMode = "easy";
 let filteredWords = [];
@@ -29,9 +30,14 @@ function initWordStat(word) {
 }
 
 // Check if a word is "truly struggling" (2+ failures OR more failures than successes)
+// BUT if user got it right 2+ times, they've mastered it
 function isTrulyStruggling(word) {
   const stat = wordStats[word];
   if (!stat) return false;
+  
+  // If user got it right twice, they've mastered it - remove from practice
+  if (stat.successes >= 2) return false;
+  
   return stat.failures >= 2 || (stat.failures > 0 && stat.failures > stat.successes);
 }
 
@@ -47,6 +53,19 @@ function recordSuccess(word) {
   initWordStat(word);
   wordStats[word].successes++;
   saveWordStats();
+}
+
+// Manually add a word to practice (0 successes, 1 failure)
+function manuallyAddToPractice(word) {
+  initWordStat(word);
+  // Only set to 0 successes and 1 failure if not already tracked
+  if (wordStats[word].failures === 0 && wordStats[word].successes === 0) {
+    wordStats[word].failures = 1;
+    wordStats[word].successes = 0;
+  }
+  saveWordStats();
+  updatePracticeModeLabel();
+  alert(`"${word}" has been added to practice mode!`);
 }
 
 // Get list of struggling words
@@ -66,18 +85,31 @@ function getUniqueWordsWithFailures() {
   return Object.keys(wordStats).filter(word => wordStats[word].failures > 0).length;
 }
 
+// Count unique struggling words (for practice mode)
+function getUniqueStrugglingWords() {
+  return getStruggleWords().length;
+}
+
 // Check if practice mode is unlocked (15+ unique words with at least one failure)
 function isPracticeModeUnlocked() {
   return getUniqueWordsWithFailures() >= 15;
 }
 
-// Update practice mode label to show progress
+// Check if practice mode should be re-locked (fewer than 10 struggling words)
+function shouldRelock() {
+  return getUniqueStrugglingWords() < 10 && currentMode === "practice";
+}
+
+// Update practice mode label and UI elements
 function updatePracticeModeLabel() {
   const practiceOption = document.getElementById("practiceOption");
   if (!practiceOption) return;
   
+  const warningText = document.getElementById("practiceWarning");
+  
   if (isPracticeModeUnlocked()) {
-    practiceOption.textContent = "Practice (Unlocked)";
+    const strugglingCount = getUniqueStrugglingWords();
+    practiceOption.textContent = `Practice (${strugglingCount}/10)`;
     practiceOption.style.fontWeight = "bold";
     practiceOption.style.color = "green";
   } else {
@@ -85,6 +117,13 @@ function updatePracticeModeLabel() {
     practiceOption.textContent = `Practice (${wrongWords}/15)`;
     practiceOption.style.color = "";
     practiceOption.style.fontWeight = "";
+  }
+  
+  // Show/hide practice warning based on current mode
+  if (currentMode === "practice") {
+    if (warningText) warningText.style.display = "block";
+  } else {
+    if (warningText) warningText.style.display = "none";
   }
 }
 
@@ -118,7 +157,7 @@ fetch("words.json")
     pickWord();
   });
 
-// Pick random word
+// Pick random word (avoiding same word twice in a row)
 function pickWord() {
   if (filteredWords.length === 0) {
     if (currentMode === "practice") {
@@ -133,7 +172,15 @@ function pickWord() {
     }
     return;
   }
-  current = filteredWords[Math.floor(Math.random() * filteredWords.length)];
+  
+  // Keep picking until we get a different word from the previous one
+  let newWord;
+  do {
+    newWord = filteredWords[Math.floor(Math.random() * filteredWords.length)];
+  } while (filteredWords.length > 1 && newWord.word === previousWord);
+  
+  previousWord = newWord.word;
+  current = newWord;
   document.getElementById("answer").value = "";
   document.getElementById("feedback").textContent = "";
 }
@@ -193,9 +240,26 @@ document.getElementById("check").onclick = () => {
     recordFailure(current.word);
   }
   updatePracticeModeLabel();
+  
+  // Check if practice mode should be re-locked
+  if (shouldRelock()) {
+    currentMode = "easy";
+    document.getElementById("difficultyMode").value = "easy";
+    filterWordsByMode();
+    pickWord();
+    alert("Practice mode re-locked! You have fewer than 10 struggling words. Master more words to unlock it again!");
+    updatePracticeModeLabel();
+  }
 };
 
 document.getElementById("next").onclick = pickWord;
+
+// Add current word to practice manually
+document.getElementById("addToPractice").onclick = () => {
+  if (current) {
+    manuallyAddToPractice(current.word);
+  }
+};
 
 // Mode selector handler
 document.getElementById("difficultyMode").onchange = (e) => {
@@ -211,5 +275,6 @@ document.getElementById("difficultyMode").onchange = (e) => {
   
   currentMode = selectedMode;
   filterWordsByMode();
+  updatePracticeModeLabel();
   pickWord();
 };
