@@ -36,6 +36,13 @@ h1 {
   font-size: 2.5rem;
 }
 
+h2 {
+  margin-bottom: 0.5rem;
+  font-weight: normal;
+  font-size: 1rem;
+  color: #374151;
+}
+
 .mode-selector {
   margin-bottom: 1.5rem;
   display: flex;
@@ -168,5 +175,11 @@ input {
 
 #closePopup:hover {
   background: #7c3aed;
+  transform: translateY(-1px);
+}
+
+/* ---- Button glow effect ---- */
+button.glow {
+  box-shadow: 0 0 15px 4px rgba(79, 70, 229, 0.7);
   transform: translateY(-1px);
 }
