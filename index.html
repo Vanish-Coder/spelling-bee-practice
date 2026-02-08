@@ -11,8 +11,8 @@
   <div id="licensePopup" class="popup">
     <div class="popup-content">
       <p>This site is under an MIT License. No personal data is collected and cookies are sparingly used, only when necessary (such as for remembering user choices, never for tracking or analytics). The source code is open source and you can view it <a href="https://github.com/Vanish-Coder/spelling-bee-practice" target="_blank">here</a>.</p>
-      <label><input type="checkbox" id="dontShowAgain"> Don't show again</label>
-      <button id="closePopup">Got it</button>
+      <label style="display:inline-block; margin-top: 0.5rem;"><input type="checkbox" id="dontShowAgain"> Don't show again</label>
+      <button id="closePopup" style="margin-top:0.5rem;">Got it</button>
     </div>
   </div>
 
@@ -36,9 +36,6 @@
 
     <button id="clearCache" style="margin-bottom: 1rem; margin-left: 0.5rem; background: #ef4444; padding: 0.8rem 1.2rem; border: none; border-radius: 8px; color: white; font-size: 1rem; font-weight: 600; cursor: pointer;">🗑️ Clear Cache</button>
 
-    <!-- NEW SFX Toggle Button -->
-    <button id="toggleSFX" style="margin-bottom: 1rem; margin-left: 0.5rem; background: #ef4444; padding: 0.8rem 1.2rem; border: none; border-radius: 8px; color: white; font-size: 1rem; font-weight: 600; cursor: pointer;">SFX: On</button>
-
     <div class="buttons">
       <button id="sayWord">🔊 Say Word</button>
       <button id="saySlow">🔊 Say Slower</button>
@@ -57,5 +54,22 @@
   </div>
 
   <script src="script.js"></script>
+  <script>
+    // License popup logic
+    const popup = document.getElementById('licensePopup');
+    const closeBtn = document.getElementById('closePopup');
+    const dontShow = document.getElementById('dontShowAgain');
+
+    if (!localStorage.getItem('dontShowLicense')) {
+      popup.style.display = 'flex';
+    }
+
+    closeBtn.addEventListener('click', () => {
+      if (dontShow.checked) {
+        localStorage.setItem('dontShowLicense', 'true');
+      }
+      popup.style.display = 'none';
+    });
+  </script>
 </body>
 </html>
