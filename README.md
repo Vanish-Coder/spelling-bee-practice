@@ -8,7 +8,7 @@
 - Auto-grading 
 - Button to manually add words to practice mode.
 - A clear cache button to reset all progress.
-- Ability to get the word slowed down, the word in a sentence, the word's meaning, and obviously the word itself (using built-in text-to-speech)
+- Ability to get the word spoken slower, the word in a sentence, the word's meaning, and obviously the word itself (using built-in text-to-speech)
 
 ## Offline Use:
 ### Note: you can't simply open the index.html file as on many Operating System's, the Text-to-Speech API for web won't work locally. Instead, you'll need to set up a local server, the simplest way being using python (instructions below).
