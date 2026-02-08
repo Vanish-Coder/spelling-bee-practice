@@ -11,7 +11,7 @@
 - Ability to get the word spoken slower, the word in a sentence, the word's meaning, and obviously the word itself (using built-in text-to-speech)
 
 ## Offline Use:
-### Note: you can't simply open the index.html file as on many Operating Systems, the Text-to-Speech API for web won't work locally. Instead, you'll need to set up a local server, the simplest way being using python (instructions below).
+### Note: you can't simply open the index.html file as on many Operating Systems, the built-in Text-to-Speech for your browser won't work locally. Instead, you'll need to set up a local server, the simplest way being using python (instructions below).
 - Initial Step: You need to have Python installed (you can get it here: https://www.python.org/downloads/), make sure to get the latest version. To check if you have python installed enter "python3 --version" or "python --version" into your terminal.
 - Install the latest release of the software.
 - Open up the folder in your terminal directory. (Use the cd command, for example, if the file is stored in a folder called "Bee" which is stored in another folder called "Desktop", the command would be "cd Desktop/Bee".)
