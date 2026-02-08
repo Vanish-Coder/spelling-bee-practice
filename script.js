@@ -110,20 +110,20 @@ function filterWordsByMode() {
 function updatePracticeModeLabel() {
   const practiceOption = document.getElementById("practiceOption");
   if (!practiceOption) return;
+
   const warningText = document.getElementById("practiceWarning");
 
   if (isPracticeModeUnlocked()) {
-    const strugglingCount = getUniqueStrugglingWords();
-    practiceOption.textContent = `Practice (${strugglingCount}/10)`;
+    practiceOption.textContent = `Practice (Unlocked)`;
     practiceOption.style.fontWeight = "bold";
     practiceOption.style.color = "green";
   } else {
-    const wrongWords = getUniqueWordsWithFailures();
-    practiceOption.textContent = `Practice (${wrongWords}/15)`;
-    practiceOption.style.color = "";
+    practiceOption.textContent = `Practice (Locked)`;
     practiceOption.style.fontWeight = "";
+    practiceOption.style.color = "";
   }
 
+  // Show/hide practice warning
   if (currentMode === "practice") {
     if (warningText) warningText.style.display = "block";
   } else {
