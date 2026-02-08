@@ -68,6 +68,21 @@ function manuallyAddToPractice(word) {
   alert(`"${word}" has been added to practice mode!`);
 }
 
+// Clear all cached data from localStorage
+function clearCache() {
+  if (confirm("Are you sure? This will delete all your progress and your unlock status.")) {
+    localStorage.removeItem('spellingBeeWordStats');
+    wordStats = {};
+    currentMode = "easy";
+    previousWord = null;
+    document.getElementById("difficultyMode").value = "easy";
+    filterWordsByMode();
+    updatePracticeModeLabel();
+    pickWord();
+    alert("Cache cleared! Your progress has been reset.");
+  }
+}
+
 // Get list of struggling words
 function getStruggleWords() {
   return words
@@ -260,6 +275,9 @@ document.getElementById("addToPractice").onclick = () => {
     manuallyAddToPractice(current.word);
   }
 };
+
+// Clear cache button
+document.getElementById("clearCache").onclick = clearCache;
 
 // Mode selector handler
 document.getElementById("difficultyMode").onchange = (e) => {
