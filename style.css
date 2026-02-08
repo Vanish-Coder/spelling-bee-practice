@@ -198,6 +198,29 @@ input {
   font-size: 0.9rem;
 }
 
+/* ===== Popup button style (same as main buttons) ===== */
+.popup-btn {
+  padding: 0.8rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #4f46e5;
+  color: white;
+  transition: all 0.2s ease;
+}
+
+.popup-btn:hover {
+  background: #6366f1;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.popup-btn:active {
+  transform: translateY(0);
+}
+
 /* ===== Button Glow ===== */
 .button-glow {
   box-shadow: 0 0 12px 4px rgba(79, 70, 229, 0.7);
