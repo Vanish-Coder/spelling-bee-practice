@@ -10,24 +10,28 @@ let wordStats = {}; // Track {word: {failures: 0, successes: 0}}
 const clickSound = new Audio("click.wav");
 
 // ===== License Popup Logic =====
-const licensePopup = document.getElementById("licensePopup");
-const closePopupBtn = document.getElementById("closePopup");
-const dontShowCheckbox = document.getElementById("dontShowAgain");
+document.addEventListener("DOMContentLoaded", () => {
+  const licensePopup = document.getElementById("licensePopup");
+  const closePopupBtn = document.getElementById("closePopup");
+  const dontShowCheckbox = document.getElementById("dontShowAgain");
 
-// Show popup if user hasn't opted out
-if (!localStorage.getItem("hideLicensePopup")) {
-  licensePopup.style.display = "flex";
-}
-
-// Close popup function
-closePopupBtn.onclick = () => {
-  triggerGlow(closePopupBtn);
-  if (dontShowCheckbox.checked) {
-    localStorage.setItem("hideLicensePopup", "true");
+  // Show popup if user hasn't opted out
+  if (!localStorage.getItem("hideLicensePopup")) {
+    licensePopup.style.display = "flex";
+  } else {
+    licensePopup.style.display = "none";
   }
-  licensePopup.style.display = "none";
-  clickSound.play();
-};
+
+  // Close popup function
+  closePopupBtn.onclick = () => {
+    triggerGlow(closePopupBtn);
+    if (dontShowCheckbox.checked) {
+      localStorage.setItem("hideLicensePopup", "true");
+    }
+    licensePopup.style.display = "none";
+    clickSound.play();
+  };
+});
 
 // ===== Word Stats Storage =====
 function loadWordStats() {
