@@ -3,7 +3,7 @@
 ## Appearance (looks will differ depending on screen size, but the middle panel will always look the same/similar):
 <img width="2545" height="1213" alt="Screenshot 2026-02-07 at 6 29 00 PM" src="https://github.com/user-attachments/assets/0c117212-21c0-479b-a44b-9dc6a309c385" />
 
-## Features: 
+## Core Features (as updates come, more features will obviously be added, but these are the core features): 
 - Multiple difficulty modes including easy (7 or less letters), hard (more than 7 letters), and practice (frequently incorrect words).
 - Auto-grading 
 - Button to manually add words to practice mode.
