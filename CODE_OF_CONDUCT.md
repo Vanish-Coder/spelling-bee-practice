@@ -60,8 +60,8 @@ representative at an online or offline event.
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
 reported to the community leaders responsible for enforcement at
-https://github.com/Vanish-Coder/spelling-bee-practice/discussions.
-All complaints will be reviewed and investigated promptly and fairly.
+[https://github.com/Vanish-Coder/spelling-bee-practice/discussions.
+](https://github.com/Vanish-Coder/spelling-bee-practice/discussions/categories/report) All complaints will be reviewed and investigated promptly and fairly.
 
 All community leaders are obligated to respect the privacy and security of the
 reporter of any incident.
