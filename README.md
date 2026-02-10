@@ -1,8 +1,5 @@
 # Spelling Bee Practice - A site to help you prepare for spelling bees at a CCSS-CA (California's Common Core State Standards) 4th to 6th grade level.
 
-## IMPORTANT NOTE ABOUT MODDING:
-This software is under a GNU GPL-v3 license, so all mods that you wish to share must be open source. **One of the biggest contributions you can make is to add new word lists** and create easy methods to switch to those lists. The main place to send a question about any potential implemention questions is in this repository's discussion tab, specifically in the Q&A tab ([https://github.com/Vanish-Coder/spelling-bee-practice/discussions](https://github.com/Vanish-Coder/spelling-bee-practice/discussions/categories/q-a)).
-
 ## Appearance (looks will differ depending on screen size, but the middle panel will always look the same/similar):
 <img width="2545" height="1213" alt="Screenshot 2026-02-07 at 6 29 00 PM" src="https://github.com/user-attachments/assets/0c117212-21c0-479b-a44b-9dc6a309c385" />
 
